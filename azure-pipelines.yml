@@ -9,7 +9,7 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 steps:
 - task: DotNetCoreCLI@2
@@ -21,7 +21,10 @@ steps:
     command: 'test'
     projects: '**/**Tests.csproj'
     testRunTitle: 'Test'
-  
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    arguments: '--collect "Code coverage"'
 - task: WhiteSource@21
   inputs:
     cwd: '$(System.DefaultWorkingDirectory)'
