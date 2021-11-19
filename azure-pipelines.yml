@@ -16,6 +16,13 @@ steps:
   inputs:
     command: 'build'
     projects: '**/Globomantics.Data.sln'
-- task: CmdLine@2
+- task: DotNetCoreCLI@2
   inputs:
-    script: 'dotnet nuget push $(Build.Repository.LocalPath)/OurWebApp.Data/bin/Debug/*.nupkg --source https://nuget.pkg.github.com/FeynmanFan/index.json --api-key $(GITHUBAPIKEY)'
+    command: 'test'
+    projects: '**/**Tests.csproj'
+    testRunTitle: 'Test'
+  
+- task: WhiteSource@21
+  inputs:
+    cwd: '$(System.DefaultWorkingDirectory)'
+    projectName: 'Whitesource Scan'
